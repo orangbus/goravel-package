@@ -1,10 +1,10 @@
-package rabbitmq
+package axios
 
 import (
 	"github.com/goravel/framework/contracts/foundation"
 )
 
-const Binding = "rabbitmq"
+const Binding = "axios"
 
 var App foundation.Application
 
@@ -15,7 +15,7 @@ func (receiver *ServiceProvider) Register(app foundation.Application) {
 	App = app
 
 	app.Bind(Binding, func(app foundation.Application) (any, error) {
-		return NewClient(), nil
+		return nil, nil
 	})
 }
 

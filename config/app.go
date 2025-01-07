@@ -26,6 +26,8 @@ import (
 	"github.com/goravel/gin"
 
 	"goravel/app/providers"
+	"goravel/packages/elastic"
+	"goravel/packages/spider"
 )
 
 // Boot Start all init methods of the current folder to bootstrap all config.
@@ -119,6 +121,8 @@ func init() {
 			&providers.ValidationServiceProvider{},
 			&providers.DatabaseServiceProvider{},
 			&gin.ServiceProvider{},
+			&elastic.ServiceProvider{},
+			&spider.ServiceProvider{},
 		},
 	})
 }

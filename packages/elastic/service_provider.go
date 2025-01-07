@@ -13,9 +13,10 @@ type ServiceProvider struct {
 
 func (receiver *ServiceProvider) Register(app foundation.Application) {
 	App = app
+	app.MakeConfig()
 
-	app.Bind(Binding, func(app foundation.Application) (any, error) {
-		return NewClient(), nil
+	app.Singleton(Binding, func(app foundation.Application) (any, error) {
+		return NewClient()
 	})
 }
 

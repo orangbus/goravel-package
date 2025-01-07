@@ -21,7 +21,7 @@ type Elastic struct {
 
 func NewClient() (*Elastic, error) {
 	hosts := []string{}
-	host := cast.ToString(facades.Config().Get("elastic.host"))
+	host := facades.Config().GetString("elastic.host")
 	if strings.Contains(host, ",") {
 		split := strings.Split(host, ",")
 		for _, h := range split {
