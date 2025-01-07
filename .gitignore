@@ -1,0 +1,10 @@
+.idea
+.DS_Store
+.env
+storage/framework
+storage/app
+./tmp/*
+*.exe
+tmp/
+*.log
+*.lock
