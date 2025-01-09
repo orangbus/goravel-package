@@ -10,6 +10,8 @@ import (
 	"github.com/elastic/go-elasticsearch/v8/typedapi/core/info"
 	"github.com/goravel/framework/facades"
 	"github.com/spf13/cast"
+	"goravel/packages/elastic/pkg/document"
+	index2 "goravel/packages/elastic/pkg/index"
 	"net/http"
 	"strings"
 	"time"
@@ -52,6 +54,9 @@ func NewClient() (*Elastic, error) {
 func (e *Elastic) Version() (*info.Response, error) {
 	return e.client.Info().Do(context.Background())
 }
+func (e *Elastic) Client() *elasticsearch.TypedClient {
+	return e.client
+}
 
 func (e *Elastic) Search(indexName string, query map[string]interface{}, page int, limit ...int) ([]interface{}, int64, error) {
 	var list []interface{}
@@ -90,4 +95,49 @@ func (e *Elastic) Search(indexName string, query map[string]interface{}, page in
 	}
 	total = res.Hits.Total.Value
 	return list, total, nil
+}
+
+func (e *Elastic) IndexCreate(indexName string) error {
+	response, err := e.client.Indices.Create(indexName).Do(context.Background())
+	if err != nil {
+		return err
+	}
+	if !response.Acknowledged {
+		return errors.New(fmt.Sprintf("%s 创建失败", indexName))
+	}
+	return nil
+}
+
+func (e *Elastic) IndexDelete(indexName string) error {
+	response, err := e.client.Indices.Delete(indexName).Do(context.Background())
+	if err != nil {
+		return err
+	}
+	if !response.Acknowledged {
+		return errors.New(fmt.Sprintf("%s 删除失败", indexName))
+	}
+	return nil
+}
+
+func (e *Elastic) Mapping(indexName string, mapping map[string]interface{}) error {
+	marshal, err := json.Marshal(mapping)
+	if err != nil {
+		return err
+	}
+	reader := bytes.NewReader(marshal)
+	response, err := e.client.Indices.Create(indexName).Raw(reader).Do(context.Background())
+	if err != nil {
+		return err
+	}
+	if !response.Acknowledged {
+		return errors.New(fmt.Sprintf("[%s]索引创建失败", indexName))
+	}
+	return nil
+}
+
+func (e *Elastic) Index() *index2.Index {
+	return index2.NewIndex(e.client)
+}
+func (e *Elastic) Document() *document.Document {
+	return document.NewDocument(e.client)
 }

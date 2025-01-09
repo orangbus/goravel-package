@@ -21,5 +21,7 @@ func (receiver *ServiceProvider) Register(app foundation.Application) {
 }
 
 func (receiver *ServiceProvider) Boot(app foundation.Application) {
-
+	app.Publishes("github.com/orangbnus/goravel-elastic", map[string]string{
+		"config/elastic.go": app.ConfigPath("elastic.go"),
+	})
 }

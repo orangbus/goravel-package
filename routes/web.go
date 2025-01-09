@@ -22,8 +22,8 @@ func Web() {
 		router.Get("version", elasticController.Version)
 		router.Get("search", elasticController.Search)
 
-		router.Prefix("elastic/index").Group(func(router route.Router) {
-			router.Get("list", elasticController.IndexList)
+		router.Prefix("index").Group(func(router route.Router) {
+			router.Post("mapping", elasticController.Mapping)
 			router.Get("create", elasticController.IndexCreate)
 			router.Get("delete", elasticController.IndexDelete)
 		})

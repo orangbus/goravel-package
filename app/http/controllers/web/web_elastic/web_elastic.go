@@ -3,7 +3,8 @@ package web_elastic
 import (
 	"github.com/goravel/framework/contracts/http"
 	"goravel/app/utils/resp"
-	facades2 "goravel/packages/elastic/facades"
+	elastic "goravel/packages/elastic/facades"
+	"log"
 )
 
 type WebElastic struct {
@@ -20,7 +21,7 @@ func (r *WebElastic) Index(ctx http.Context) http.Response {
 	return nil
 }
 func (r *WebElastic) Version(ctx http.Context) http.Response {
-	version, err := facades2.Elastic().Version()
+	version, err := elastic.Elastic().Version()
 	if err != nil {
 		return resp.Error(ctx, err.Error())
 	}
@@ -37,21 +38,39 @@ func (r *WebElastic) Search(ctx http.Context) http.Response {
 		},
 	}
 
-	list, total, err := facades2.Elastic().Search(indexName, query, 1)
+	list, total, err := elastic.Elastic().Search(indexName, query, 1)
 	if err != nil {
 		return resp.Error(ctx, err.Error())
 	}
 	return resp.List(ctx, list, total)
 }
 
-func (r *WebElastic) IndexList(context http.Context) http.Response {
-	return nil
+func (r *WebElastic) Mapping(ctx http.Context) http.Response {
+	indexName := ctx.Request().Input("index")
+	mapping := map[string]interface{}{}
+	param := ctx.Request().Input("mapping")
+	log.Printf(param)
+	return resp.Success(ctx, param)
+
+	err := elastic.Elastic().Mapping(indexName, mapping)
+	if err != nil {
+		return resp.Error(ctx, err.Error())
+	}
+	return resp.Success(ctx, "创建成功")
 }
 
-func (r *WebElastic) IndexCreate(context http.Context) http.Response {
-	return nil
+func (r *WebElastic) IndexCreate(ctx http.Context) http.Response {
+	index := ctx.Request().Input("index")
+	if err := elastic.Elastic().Index().Create(index); err != nil {
+		return resp.Error(ctx, err.Error())
+	}
+	return resp.Success(ctx, "创建成功")
 }
 
-func (r *WebElastic) IndexDelete(context http.Context) http.Response {
-	return nil
+func (r *WebElastic) IndexDelete(ctx http.Context) http.Response {
+	index := ctx.Request().Input("index")
+	if err := elastic.Elastic().IndexDelete(index); err != nil {
+		return resp.Error(ctx, err.Error())
+	}
+	return resp.Success(ctx, "删除成功")
 }
