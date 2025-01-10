@@ -6,5 +6,7 @@ import (
 
 func init() {
 	config := facades.Config()
-	config.Add("axios", map[string]any{})
+	config.Add("axios", map[string]any{
+		"base_url": "http://localhost:8080",
+	})
 }

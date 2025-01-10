@@ -26,6 +26,7 @@ import (
 	"github.com/goravel/gin"
 
 	"goravel/app/providers"
+	"goravel/packages/axios"
 	"goravel/packages/elastic"
 	"goravel/packages/spider"
 )
@@ -123,6 +124,7 @@ func init() {
 			&gin.ServiceProvider{},
 			&elastic.ServiceProvider{},
 			&spider.ServiceProvider{},
+			&axios.ServiceProvider{},
 		},
 	})
 }
