@@ -4,10 +4,12 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"github.com/goravel/framework/facades"
 	"github.com/spf13/cast"
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 )
 
@@ -25,6 +27,7 @@ func NewAxios() *Axios {
 		timeout: 30,
 		headers: map[string]string{
 			"Content-Type": "application/json",
+			"User-Agent":   facades.Config().GetString("axios.user_agent"),
 		},
 	}
 	return &axios
@@ -53,20 +56,26 @@ func (a *Axios) Authorization(token string) *Axios {
 	a.headers["Authorization"] = fmt.Sprintf("Bearer %s", token)
 	return a
 }
-func (a *Axios) Get(base_url string, param map[string]interface{}) ([]byte, error) {
+func (a *Axios) Get(base_url string, param map[string]any) ([]byte, error) {
 	a.base_url = base_url
 	a.body = param
 	return a.builder("GET")
 }
 
-//func (a *Axios) Post() {
-//
-//}
-//func (a *Axios) Upload() {
-//
-//}
+func (a *Axios) Post(base_url string, param map[string]any) ([]byte, error) {
+	a.base_url = base_url
+	a.body = param
+	return a.builder("POST")
+}
 
-func (a *Axios) Dd() map[string]interface{} {
+func (a *Axios) PostForm(base_url string, param map[string]any) ([]byte, error) {
+	a.base_url = base_url
+	a.body = param
+	a.headers["Content-Type"] = "application/x-www-form-urlencoded"
+	return a.builder("POST")
+}
+
+func (a *Axios) Dd() map[string]any {
 	body := map[string]interface{}{}
 	body["header"] = a.headers
 	body["body"] = a.body
@@ -98,7 +107,15 @@ func (a *Axios) builder(method string) ([]byte, error) {
 		req_url = fmt.Sprintf("%s?%s", a.base_url, params.Encode())
 	}
 
-	req, err := http.NewRequest(method, req_url, nil)
+	// post body
+	formData := url.Values{}
+	if len(a.body) > 0 {
+		for key, value := range a.body {
+			formData.Add(key, fmt.Sprintf("%v", value))
+		}
+	}
+
+	req, err := http.NewRequest(method, req_url, strings.NewReader(formData.Encode()))
 	if err != nil {
 		return nil, err
 	}

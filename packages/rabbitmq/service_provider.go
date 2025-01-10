@@ -15,10 +15,12 @@ func (receiver *ServiceProvider) Register(app foundation.Application) {
 	App = app
 
 	app.Bind(Binding, func(app foundation.Application) (any, error) {
-		return NewClient(), nil
+		return NewRabbitmq()
 	})
 }
 
 func (receiver *ServiceProvider) Boot(app foundation.Application) {
-
+	app.Publishes("github.com/orangbus/goravel-rabbitmq", map[string]string{
+		"config/rabbitmq.go": app.ConfigPath("rabbitmq.go"),
+	})
 }

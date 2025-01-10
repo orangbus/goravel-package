@@ -1,6 +1,7 @@
 package main
 
 import (
+	mq "goravel/packages/rabbitmq/facades"
 	"os"
 	"os/signal"
 	"syscall"
@@ -32,6 +33,10 @@ func main() {
 		}
 
 		os.Exit(0)
+	}()
+
+	go func() {
+		mq.Rabbitmq().Copsume()
 	}()
 
 	select {}

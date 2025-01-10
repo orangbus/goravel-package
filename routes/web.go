@@ -7,6 +7,7 @@ import (
 	"github.com/goravel/framework/support"
 	"goravel/app/http/controllers/web/web_axios"
 	"goravel/app/http/controllers/web/web_elastic"
+	"goravel/app/http/controllers/web/web_rabbitmq"
 	"goravel/app/http/controllers/web/web_spider"
 )
 
@@ -32,7 +33,9 @@ func Web() {
 	axiosController := web_axios.NewWebAxios()
 	facades.Route().Prefix("axios").Group(func(router route.Router) {
 		router.Get("get", axiosController.Index)
-		router.Get("post", axiosController.Index)
+		router.Get("post", axiosController.Post)
+		router.Get("postform", axiosController.PostForm)
+		router.Get("spider", axiosController.HttpTest)
 	})
 
 	spiderController := web_spider.NewWebSpider()
@@ -40,8 +43,12 @@ func Web() {
 		router.Get("list", spiderController.Index)
 		router.Get("cate", spiderController.CateList)
 	})
-	//
-	//facades.Route().Prefix("rabbitmq").Group(func(router route.Router) {
-	//
-	//})
+
+	mqController := web_rabbitmq.NewWebRabbitmq()
+	facades.Route().Prefix("rabbitmq").Group(func(router route.Router) {
+		router.Get("msg", mqController.Msg)
+		router.Get("publish", mqController.Publish)
+		router.Get("routing", mqController.Routing)
+		router.Get("topic", mqController.Topic)
+	})
 }
