@@ -1,10 +1,9 @@
 package facades
 
 import (
+	"github.com/orangbus/axios"
+	"github.com/orangbus/axios/contracts"
 	"log"
-
-	"goravel/packages/axios"
-	"goravel/packages/axios/contracts"
 )
 
 func Axios() contracts.Axios {

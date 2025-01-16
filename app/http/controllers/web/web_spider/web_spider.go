@@ -2,8 +2,8 @@ package web_spider
 
 import (
 	"github.com/goravel/framework/contracts/http"
+	"github.com/orangbus/goravel-spider/facades"
 	"goravel/app/utils/resp"
-	"goravel/packages/spider/facades"
 )
 
 type WebSpider struct {
@@ -16,8 +16,13 @@ func NewWebSpider() *WebSpider {
 	}
 }
 
+func (r *WebSpider) Ping(ctx http.Context) http.Response {
+	status := facades.Spider().BaseUrl("https://ccc.com").Ping()
+	return resp.Data(ctx, status)
+}
+
 func (r *WebSpider) Index(ctx http.Context) http.Response {
-	result, err := facades.Spider().BaseUrl("https://www.msnii.com/api/json.php").GetList(1)
+	result, err := facades.Spider().BaseUrl("https://xx.com").GetList(1)
 	if err != nil {
 		return resp.Error(ctx, err.Error())
 	}

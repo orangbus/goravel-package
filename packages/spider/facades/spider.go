@@ -3,8 +3,8 @@ package facades
 import (
 	"log"
 
-	"goravel/packages/spider"
-	"goravel/packages/spider/contracts"
+	"github.com/orangbus/goravel-spider"
+	"github.com/orangbus/goravel-spider/contracts"
 )
 
 func Spider() contracts.Spider {

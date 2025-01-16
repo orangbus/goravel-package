@@ -1,6 +1,6 @@
 package contracts
 
-import "goravel/packages/axios"
+import "github.com/orangbus/axios"
 
 type Axios interface {
 	HttpBin() *axios.HttpBin

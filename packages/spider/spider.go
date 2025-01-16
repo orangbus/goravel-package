@@ -3,8 +3,8 @@ package spider
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/orangbus/goravel-spider/pkg/movie_spider"
 	"github.com/spf13/cast"
-	"goravel/packages/spider/pkg/movie_spider"
 	"io"
 	"net/http"
 	"net/url"
@@ -13,6 +13,7 @@ import (
 type Spider struct {
 	baseUrl string
 	page    int
+	limit   int
 	hour    int
 	tp      int
 	ac      string
@@ -73,24 +74,6 @@ func (s *Spider) get() (movie_spider.MovieResponse, error) {
 	return data, nil
 }
 
-func (s *Spider) GetList(page int) (movie_spider.MovieResponse, error) {
-	if page <= 0 {
-		page = 1
-	}
-	s.page = page
-	return s.get()
-}
-
-func (s *Spider) Search(keyword string) (movie_spider.MovieResponse, error) {
-	s.keyword = keyword
-	return s.get()
-}
-
-func (s *Spider) Detail(ids string) (movie_spider.MovieResponse, error) {
-	s.ids = ids
-	return s.get()
-}
-
 func (s *Spider) GetCateList() ([]movie_spider.ClassList, error) {
 	resp, err := s.get()
 	if err != nil {
@@ -99,6 +82,31 @@ func (s *Spider) GetCateList() ([]movie_spider.ClassList, error) {
 	return resp.Class, nil
 }
 
-func (s *Spider) Ping(keyword string) bool {
+func (s *Spider) GetList(page int, limit ...int) (movie_spider.MovieResponse, error) {
+	if page <= 0 {
+		page = 1
+	}
+	if len(limit) > 0 {
+		s.limit = limit[0]
+	}
+	s.page = page
+	return s.get()
+}
+
+func (s *Spider) Search(keyword string, page int, limit ...int) (movie_spider.MovieResponse, error) {
+	s.keyword = keyword
+	s.page = page
+	if len(limit) > 0 {
+		s.limit = limit[0]
+	}
+	return s.get()
+}
+
+func (s *Spider) Detail(ids string) (movie_spider.MovieResponse, error) {
+	s.ids = ids
+	return s.get()
+}
+
+func (s *Spider) Ping() bool {
 	return true
 }

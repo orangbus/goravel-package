@@ -25,10 +25,10 @@ import (
 	"github.com/goravel/framework/validation"
 	"github.com/goravel/gin"
 
+	"github.com/orangbus/goravel-spider"
 	"goravel/app/providers"
 	"goravel/packages/axios"
 	"goravel/packages/elastic"
-	"goravel/packages/spider"
 )
 
 // Boot Start all init methods of the current folder to bootstrap all config.
