@@ -53,18 +53,23 @@ func (a *Axios) Authorization(token string) *Axios {
 	a.headers["Authorization"] = fmt.Sprintf("Bearer %s", token)
 	return a
 }
-func (a *Axios) Get(base_url string, param map[string]interface{}) ([]byte, error) {
+func (a *Axios) Get(base_url string, param map[string]any) ([]byte, error) {
 	a.base_url = base_url
 	a.body = param
 	return a.builder("GET")
 }
+func (a *Axios) Post(base_url string, param map[string]any) ([]byte, error) {
+	a.base_url = base_url
+	a.body = param
+	return a.builder("POST")
+}
 
-//func (a *Axios) Post() {
-//
-//}
-//func (a *Axios) Upload() {
-//
-//}
+func (a *Axios) PostForm(base_url string, param map[string]any) ([]byte, error) {
+	a.base_url = base_url
+	a.body = param
+	a.headers["Content-Type"] = "application/x-www-form-urlencoded"
+	return a.builder("POST")
+}
 
 func (a *Axios) Dd() map[string]interface{} {
 	body := map[string]interface{}{}
