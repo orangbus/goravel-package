@@ -1,16 +1,15 @@
 module goravel
 
-go 1.22.7
-
-toolchain go1.23.3
+go 1.23.4
 
 require (
-	github.com/elastic/go-elasticsearch/v8 v8.17.0
 	github.com/gin-gonic/gin v1.10.0
 	github.com/goravel/framework v1.15.2
 	github.com/goravel/gin v1.3.2
-	github.com/rabbitmq/amqp091-go v1.10.0
-	github.com/spf13/cast v1.7.1
+	github.com/orangbus/axios v0.0.0-20250116075946-9658e016f24d
+	github.com/orangbus/elastic v0.0.1
+	github.com/orangbus/rabbitmq v0.0.0-20250116095608-dd59f7f5e1b9
+	github.com/orangbus/spider v0.0.0-20250116081534-45327d65146c
 	github.com/stretchr/testify v1.10.0
 	google.golang.org/grpc v1.69.4
 )
@@ -56,7 +55,6 @@ require (
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/dromara/carbon/v2 v2.5.2 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
-	github.com/elastic/elastic-transport-go/v8 v8.6.0 // indirect
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
@@ -124,10 +122,10 @@ require (
 	github.com/muesli/termenv v0.15.3-0.20240618155329-98d742f6907a // indirect
 	github.com/ncruces/go-strftime v0.1.9 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
-	github.com/orangbus/goravel-spider v0.0.0-20250116035104-85d4eeddd66a // indirect
 	github.com/pelletier/go-toml/v2 v2.2.3 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/pterm/pterm v0.12.80 // indirect
+	github.com/rabbitmq/amqp091-go v1.10.0 // indirect
 	github.com/redis/go-redis/v9 v9.7.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5 // indirect
@@ -142,6 +140,7 @@ require (
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.11.0 // indirect
+	github.com/spf13/cast v1.7.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/spf13/viper v1.19.0 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect

@@ -3,8 +3,8 @@ package web_axios
 import (
 	"encoding/json"
 	"github.com/goravel/framework/contracts/http"
+	"github.com/orangbus/axios/facades"
 	"goravel/app/utils/resp"
-	"goravel/packages/axios/facades"
 )
 
 type WebAxios struct {

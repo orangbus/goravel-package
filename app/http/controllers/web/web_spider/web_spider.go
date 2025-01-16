@@ -2,7 +2,7 @@ package web_spider
 
 import (
 	"github.com/goravel/framework/contracts/http"
-	"github.com/orangbus/goravel-spider/facades"
+	"github.com/orangbus/spider/facades"
 	"goravel/app/utils/resp"
 )
 

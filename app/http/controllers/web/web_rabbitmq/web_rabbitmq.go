@@ -2,8 +2,8 @@ package web_rabbitmq
 
 import (
 	"github.com/goravel/framework/contracts/http"
+	"github.com/orangbus/rabbitmq/facades"
 	"goravel/app/utils/resp"
-	"goravel/packages/rabbitmq/facades"
 )
 
 type WebRabbitmq struct {

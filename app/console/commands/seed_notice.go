@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/goravel/framework/contracts/console"
 	"github.com/goravel/framework/contracts/console/command"
-	"goravel/packages/rabbitmq/facades"
+	"github.com/orangbus/rabbitmq/facades"
 	"log"
 	"math/rand"
 	"time"

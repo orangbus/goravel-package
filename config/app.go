@@ -25,13 +25,8 @@ import (
 	"github.com/goravel/framework/validation"
 	"github.com/goravel/gin"
 
-	"github.com/orangbus/goravel-spider"
 	"goravel/app/providers"
-	"goravel/packages/axios"
-	"goravel/packages/elastic"
 )
-	"goravel/packages/rabbitmq"
-	"goravel/packages/spider"
 
 // Boot Start all init methods of the current folder to bootstrap all config.
 func Boot() {}
@@ -124,10 +119,10 @@ func init() {
 			&providers.ValidationServiceProvider{},
 			&providers.DatabaseServiceProvider{},
 			&gin.ServiceProvider{},
-			&elastic.ServiceProvider{},
-			&spider.ServiceProvider{},
-			&axios.ServiceProvider{},
-			&rabbitmq.ServiceProvider{},
+			//&elastic.ServiceProvider{},
+			//&spider.ServiceProvider{},
+			//&axios.ServiceProvider{},
+			//&rabbitmq.ServiceProvider{},
 		},
 	})
 }

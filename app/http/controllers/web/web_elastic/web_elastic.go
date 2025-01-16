@@ -2,8 +2,8 @@ package web_elastic
 
 import (
 	"github.com/goravel/framework/contracts/http"
+	elastic "github.com/orangbus/elastic/facades"
 	"goravel/app/utils/resp"
-	elastic "goravel/packages/elastic/facades"
 	"log"
 )
 
