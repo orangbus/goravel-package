@@ -4,10 +4,12 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"github.com/goravel/framework/facades"
 	"github.com/spf13/cast"
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 )
 
@@ -25,6 +27,7 @@ func NewAxios() *Axios {
 		timeout: 30,
 		headers: map[string]string{
 			"Content-Type": "application/json",
+			"User-Agent":   facades.Config().GetString("axios.user_agent"),
 		},
 	}
 	return &axios
@@ -103,7 +106,15 @@ func (a *Axios) builder(method string) ([]byte, error) {
 		req_url = fmt.Sprintf("%s?%s", a.base_url, params.Encode())
 	}
 
-	req, err := http.NewRequest(method, req_url, nil)
+	// post body
+	formData := url.Values{}
+	if len(a.body) > 0 {
+		for key, value := range a.body {
+			formData.Add(key, fmt.Sprintf("%v", value))
+		}
+	}
+
+	req, err := http.NewRequest(method, req_url, strings.NewReader(formData.Encode()))
 	if err != nil {
 		return nil, err
 	}

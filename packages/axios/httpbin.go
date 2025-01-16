@@ -19,5 +19,6 @@ func (a *HttpBin) Get(param map[string]any) ([]byte, error) {
 }
 
 func (a *HttpBin) Post(param map[string]any) ([]byte, error) {
-	return a.axios.Get(fmt.Sprintf("%s/post", a.base_url), param)
+	a.axios.headers["Content-Type"] = "application/x-www-form-urlencoded"
+	return a.axios.Post(fmt.Sprintf("%s/post", a.base_url), param)
 }

@@ -30,6 +30,8 @@ import (
 	"goravel/packages/axios"
 	"goravel/packages/elastic"
 )
+	"goravel/packages/rabbitmq"
+	"goravel/packages/spider"
 
 // Boot Start all init methods of the current folder to bootstrap all config.
 func Boot() {}
@@ -125,6 +127,7 @@ func init() {
 			&elastic.ServiceProvider{},
 			&spider.ServiceProvider{},
 			&axios.ServiceProvider{},
+			&rabbitmq.ServiceProvider{},
 		},
 	})
 }

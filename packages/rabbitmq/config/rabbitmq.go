@@ -12,5 +12,6 @@ func init() {
 		"username": config.Env("RABBITMQ_USERNAME", "guest"),
 		"password": config.Env("RABBITMQ_PASSWORD", "guest"),
 		"vhost":    config.Env("RABBITMQ_VHOST", "/"),
+		"queue":    config.Env("RABBITMQ_QUEUE", "dev"),
 	})
 }
